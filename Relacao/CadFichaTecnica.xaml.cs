@@ -430,11 +430,15 @@ namespace Relacao
                         
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                xmlPath = ConfigurationManager.AppSettings["PathDB"] + xmlAgrupamento;
+                xmlPath = ConfigurationManager.AppSettings["PathDB"];
 
                 if (xmlPath.Trim() == "")
                 {
                     xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + xmlAgrupamento;
+                }
+                else
+                {
+                    xmlPath += xmlAgrupamento;
                 }
             }
             else

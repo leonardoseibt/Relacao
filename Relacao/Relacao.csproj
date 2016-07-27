@@ -375,9 +375,6 @@
     <Resource Include="Imagens\16px-filter-icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Agrupamento.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Imagens\16px-sort-icon.png" />
   </ItemGroup>
   <ItemGroup>
@@ -392,6 +389,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagens\16px-undo-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Agrupamento.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
