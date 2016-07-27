@@ -1,0 +1,11 @@
+﻿<Window x:Class="Relacao.WindowCrystalReports"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Viewer="clr-namespace:SAPBusinessObjects.WPF.Viewer;assembly=SAPBusinessObjects.WPF.Viewer" 
+        Title="Visualização de Relatórios" Height="768" Width="1024" WindowStartupLocation="CenterScreen" 
+        ResizeMode="CanResizeWithGrip" Icon="Imagens/Letter-R.ico" WindowState="Maximized"
+        Loaded="Window_Loaded">
+    <DockPanel>
+        <Viewer:CrystalReportsViewer Name="crystalViewer" VerticalAlignment="Top" />
+    </DockPanel>
+</Window>

@@ -1,0 +1,130 @@
+﻿<Window x:Class="Relacao.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        Icon="/Imagens/Letter-R.ico" WindowState="Maximized"
+        Title="Relação de Produtos para Produção" Height="768" Width="1024" ResizeMode="CanResizeWithGrip">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Gray" Offset="0"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Arquivo">
+                <MenuItem Header="Cadastros">
+                    <MenuItem Name="menuCadMateriaPrima" Header="Matéria-Prima" Click="menuCadMateriaPrima_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Imagens/wood-16px-icon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Name="menuCadTipoMateriaPrima" Header="Tipo de Matéria-Prima" Click="menuCadTipoMateriaPrima_Click"/>
+                    <MenuItem Name="menuCadSubTipoMateriaPrima" Header="Sub-Tipo de Matéria-Prima" Click="menuCadSubTipoMateriaPrima_Click"/>
+                    <Separator/>
+                    <MenuItem Name="menuCadProduto" Header="Produto" Click="menuCadProduto_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Imagens/16px-chair-icon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Name="menuCadTipoProduto" Header="Tipo de Produto" Click="menuCadTipoProduto_Click"/>
+                    <MenuItem Name="menuCadParticularidade" Header="Particularidade" Click="menuCadParticularidade_Click"/>
+                    <MenuItem Name="menuCadLinha" Header="Linha" Click="menuCadLinha_Click"/>
+                    <Separator/>
+                    <MenuItem Name="menuCadComponente" Header="Componente" Click="menuCadComponente_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Imagens/16px-espiga-icon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Name="menuCadTipoComponente" Header="Tipo de Componente" Click="menuCadTipoComponente_Click"/>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Name="menuManFichaTecnica" Header="Ficha Técnica" Click="menuManFichaTecnica_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Imagens/16px-clipboard-icon.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="menuAlterarMedidas" Header="Manutenção de Medidas" Click="menuAlterarMedidas_Click">
+                    <MenuItem.Icon>
+                        <Image Source="/Imagens/16px-measure-icon.png"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Name="menuSair" Header="Sair" Click="menuSair_Click"/>
+            </MenuItem>
+            <MenuItem Header="_Relatórios">
+                <MenuItem Header="Ficha Técnica">
+                    <MenuItem Header="Ficha Técnica Individual" Name="menuRelFichaTecnica" Click="menuRelFichaTecnica_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Imagens/16px-printer-icon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Ficha Técnica Agrupada" Name="menuRelFichaTecnicaAgrupada" Click="menuRelFichaTecnicaAgrupada_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Imagens/16px-printer-new-icon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Cadastros">
+                    <MenuItem Header="Matéria-Prima" Name="menuRelMateriaPrima" Click="menuRelMateriaPrima_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Imagens/wood-16px-icon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Tipo de Matéria-Prima" Name="menuRelTipoMateriaPrima" Click="menuRelTipoMateriaPrima_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Produto" Name="menuRelProduto" Click="menuRelProduto_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Imagens/16px-chair-icon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Tipo de Produto" Name="menuRelTipoProduto" Click="menuRelTipoProduto_Click"/>
+                    <MenuItem Header="Linha" Name="menuRelLinha" Click="menuRelLinha_Click" />
+                    <Separator/>
+                    <MenuItem Header="Componente" Name="menuRelComponente" Click="menuRelComponente_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Imagens/16px-espiga-icon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Tipo de Componente" Name="menuRelTipoComponente" Click="menuRelTipoComponente_Click"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Configurações" Name="menuConfiguracoes" Click="menuConfiguracoes_Click">
+            </MenuItem>
+        </Menu>
+        <ToolBarPanel DockPanel.Dock="Top">
+            <ToolBarTray IsLocked="True">
+                <ToolBar>
+                    <Button Name="btnCadMateriaPrima" Click="btnCadMateriaPrima_Click" ToolTip="Cadastro de Matéria-Prima">
+                        <Image Source="/Imagens/wood-32px-icon.png"/>
+                    </Button>
+                    <Button Name="btnCadProdutos" Click="btnCadProdutos_Click" ToolTip="Cadastro de Produtos">
+                        <Image Source="/Imagens/32px-chair-icon.png"/>
+                    </Button>
+                    <Button Name="btnCadComponentes" Click="btnCadComponentes_Click" ToolTip="Cadastro de Componentes de Produtos">
+                        <Image Source="/Imagens/32px-espiga-icon.png"/>
+                    </Button>
+                    <Separator/>
+                    <Button Name="btnCadFichaTecnica" Click="btnCadFichaTecnica_Click" ToolTip="Lançamentos em Ficha Técnica">
+                        <Image Source="/Imagens/32px-clipboard-icon.png"/>
+                    </Button>
+                    <Button Name="btnAlterarMedidas" Click="btnAlterarMedidas_Click" ToolTip="Manutenção de Medidas de Componentes da Ficha Técnica">
+                        <Image Source="/Imagens/32px-measure-icon.png"/>
+                    </Button>
+                    <Separator/>
+                    <Button Name="btnRelFichaTecnica" Click="btnRelFichaTecnica_Click" ToolTip="Impressão da Ficha Técnica">
+                        <Image Source="/Imagens/32px-printer-icon.png"/>
+                    </Button>
+                    <Button Name="btnRelFichaTecnicaAgrupada" Click="btnRelFichaTecnicaAgrupada_Click" ToolTip="Impressão da Ficha Técnica Agrupada">
+                        <Image Source="/Imagens/32px-printer-new-icon.png"/>
+                    </Button>
+                    <Separator/>
+                    <Button Name="btnConfiguracoes" Click="btnConfiguracoes_Click" ToolTip="Configurações do Sistema">
+                        <Image Source="/Imagens/32px-settings-icon.png"/>
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+        </ToolBarPanel>
+    </DockPanel>
+</Window>

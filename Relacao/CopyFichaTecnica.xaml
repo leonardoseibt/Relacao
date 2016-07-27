@@ -1,0 +1,67 @@
+﻿<Window x:Class="Relacao.CopyFichaTecnica"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:commands="clr-namespace:Relacao" WindowStartupLocation="CenterScreen" 
+        Title="Copiar Ficha Técnica para outro Produto" Height="175" Width="750"
+        Icon="Imagens/Letter-R.ico" WindowStyle="ToolWindow" ResizeMode="NoResize"
+        Loaded="Window_Loaded">
+    <Window.CommandBindings>
+        <CommandBinding Command="commands:CustomCommands.BuscarProduto"
+                        CanExecute="Buscar_CanExecute"
+                        Executed="Buscar_Executed"/>
+        <CommandBinding Command="commands:CustomCommands.ConfirmaSelecaoRelFichaTecnica" 
+                        CanExecute="Confirm_CanExecute"
+                        Executed="Confirm_Executed"/>
+    </Window.CommandBindings>
+    <Grid Margin="10,7,10,10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4.5*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+        <GroupBox Header="Produto Destino" Grid.ColumnSpan="3">
+            <Grid Margin="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.8*" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="10" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="4*" />
+                </Grid.ColumnDefinitions>
+                <TextBox Name="txtReferencia" Margin="0,0,10,0" GotFocus="txtReferencia_GotFocus" TextChanged="txtReferencia_TextChanged" MaxLength="20" />
+                <Button x:Name="btnBuscarProduto" Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center"
+                        Command="commands:CustomCommands.BuscarProduto" IsDefault="True">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Imagens/16px-search-icon.png" Stretch="None"/>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnInserirProduto" Grid.Row="1" Grid.Column="3" HorizontalContentAlignment="Center" Click="btnInserirProduto_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Imagens/16px-add-icon.png" Stretch="None"/>
+                    </StackPanel>
+                </Button>
+                <TextBox Name="txtID" Grid.Column="5" Margin="10,0,0,0" IsEnabled="False" />
+                <TextBox Name="txtDescricao" Grid.Column="6" Margin="0,0,0,0" IsEnabled="False" />
+            </Grid>
+        </GroupBox>
+        <Button x:Name="btnConfirmar" Grid.Row="1" Grid.Column="1" Margin="10,20,0,0" HorizontalContentAlignment="Center" 
+                Command="commands:CustomCommands.ConfirmaSelecaoRelFichaTecnica" IsDefault="True">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Imagens/16px-apply-icon.png" Stretch="None"/>
+                <TextBlock x:Name="txtBtnConfirmar" Margin="5,0,0,0" Text="Confirmar"/>
+            </StackPanel>
+        </Button>
+        <Button x:Name="btnCancelar" Grid.Row="1" Grid.Column="2" Margin="10,20,0,0" HorizontalContentAlignment="Center" Click="btnCancelar_Click" IsCancel="True">
+            <StackPanel Orientation="Horizontal">
+                <Image Source="/Imagens/16px-delete-icon.png" Stretch="None"/>
+                <TextBlock x:Name="txtBtnCancelar" Margin="5,0,0,0" Text="Cancelar"/>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>

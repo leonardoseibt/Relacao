@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{89F40095-4D92-4890-B4C9-F19EBF09B1A5}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Relacao</RootNamespace>
+    <AssemblyName>Relacao</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.2000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="ReachFramework" />
+    <Reference Include="sapbusinessobjects.wpf.viewer, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="SAPBusinessObjects.WPF.ViewerShared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.102.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\System.Data.SQLite\2013\bin\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\..\..\..\Extended WPF Toolkit\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="CadComponente.xaml.cs">
+      <DependentUpon>CadComponente.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CadFichaTecnica.xaml.cs">
+      <DependentUpon>CadFichaTecnica.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CadLinha.xaml.cs">
+      <DependentUpon>CadLinha.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CadMateriaPrima.xaml.cs">
+      <DependentUpon>CadMateriaPrima.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CadParticularidade.xaml.cs">
+      <DependentUpon>CadParticularidade.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CadProduto.xaml.cs">
+      <DependentUpon>CadProduto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CadRelatorio.xaml.cs">
+      <DependentUpon>CadRelatorio.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CadSubTipoMateriaPrima.xaml.cs">
+      <DependentUpon>CadSubTipoMateriaPrima.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CadTipoComponente.xaml.cs">
+      <DependentUpon>CadTipoComponente.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CadTipoMateriaPrima.xaml.cs">
+      <DependentUpon>CadTipoMateriaPrima.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CadTipoProduto.xaml.cs">
+      <DependentUpon>CadTipoProduto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Componente.cs" />
+    <Compile Include="Classes\FichaTecnica.cs" />
+    <Compile Include="Classes\FichaTecnicaAgrupada.cs" />
+    <Compile Include="Classes\Linha.cs" />
+    <Compile Include="Classes\MateriaPrima.cs" />
+    <Compile Include="Classes\ObsCollection.cs" />
+    <Compile Include="Classes\Particularidade.cs" />
+    <Compile Include="Classes\Produto.cs" />
+    <Compile Include="Classes\Relatorio.cs" />
+    <Compile Include="Classes\RelatorioFichaTecnicaAgrupada.cs" />
+    <Compile Include="Classes\SubTipoMateriaPrima.cs" />
+    <Compile Include="Classes\TipoComponente.cs" />
+    <Compile Include="Classes\TipoMateriaPrima.cs" />
+    <Compile Include="Classes\CustomCommands.cs" />
+    <Compile Include="Classes\SQLite.cs" />
+    <Compile Include="Classes\Valores.cs" />
+    <Compile Include="CopyFichaTecnica.xaml.cs">
+      <DependentUpon>CopyFichaTecnica.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ManutMedidas.xaml.cs">
+      <DependentUpon>ManutMedidas.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelRelComponente.xaml.cs">
+      <DependentUpon>SelRelComponente.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelRelFichaTecnica.xaml.cs">
+      <DependentUpon>SelRelFichaTecnica.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelRelFichaTecnicaAgrupada.xaml.cs">
+      <DependentUpon>SelRelFichaTecnicaAgrupada.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelRelMateriaPrima.xaml.cs">
+      <DependentUpon>SelRelMateriaPrima.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SelRelProduto.xaml.cs">
+      <DependentUpon>SelRelProduto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="WindowConfiguracoes.xaml.cs">
+      <DependentUpon>WindowConfiguracoes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowCrystalReports.xaml.cs">
+      <DependentUpon>WindowCrystalReports.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WindowWhereUsed.xaml.cs">
+      <DependentUpon>WindowWhereUsed.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CadComponente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CadFichaTecnica.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CadLinha.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CadMateriaPrima.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CadParticularidade.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CadProduto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CadRelatorio.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CadSubTipoMateriaPrima.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CadTipoComponente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CadTipoMateriaPrima.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CadTipoProduto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CopyFichaTecnica.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Classes\TipoProduto.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="ManutMedidas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelRelComponente.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelRelFichaTecnica.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelRelFichaTecnicaAgrupada.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelRelMateriaPrima.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelRelProduto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowConfiguracoes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowCrystalReports.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WindowWhereUsed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\app.manifest" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Relatorios\RelComponente.rpt" />
+    <None Include="Relatorios\RelFichaTecnica Agrupada Produtos.rpt" />
+    <None Include="Relatorios\RelFichaTecnica Agrupada.rpt" />
+    <None Include="Relatorios\RelFichaTecnica Desmembrada.rpt" />
+    <None Include="Relatorios\RelFichaTecnica.rpt" />
+    <None Include="Relatorios\RelLinha.rpt" />
+    <None Include="Relatorios\RelMateriaPrima.rpt" />
+    <None Include="Relatorios\RelProduto.rpt" />
+    <None Include="Relatorios\RelProdutosAgrupados.rpt" />
+    <None Include="Relatorios\RelTipoComponente.rpt" />
+    <None Include="Relatorios\RelTipoMateriaPrima.rpt" />
+    <None Include="Relatorios\RelTipoProduto.rpt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\32px-cabinet-icon.png" />
+    <Resource Include="Imagens\32px-chair-icon.png" />
+    <Resource Include="Imagens\32px-component-icon.png" />
+    <Resource Include="Imagens\32px-print-icon.png" />
+    <Resource Include="Imagens\32px-settings-icon.png" />
+    <Resource Include="Imagens\32px-tree-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\Letter-R.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\16px-add-icon.png" />
+    <Resource Include="Imagens\16px-apply-icon.png" />
+    <Resource Include="Imagens\16px-copy-icon.png" />
+    <Resource Include="Imagens\16px-delete-icon.png" />
+    <Resource Include="Imagens\16px-edit-icon.png" />
+    <Resource Include="Imagens\16px-refresh-icon.png" />
+    <Resource Include="Imagens\16px-search-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\16px-cabinet-icon.png" />
+    <Resource Include="Imagens\16px-chair-icon.png" />
+    <Resource Include="Imagens\16px-component-icon.png" />
+    <Resource Include="Imagens\16px-tree-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\wood-16px-icon.png" />
+    <Resource Include="Imagens\wood-32px-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\16px-clipboard-icon.png" />
+    <Resource Include="Imagens\32px-clipboard-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\32px-espiga-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\16px-espiga-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\16px-clear-filter-icon.png" />
+    <Resource Include="Imagens\16px-filter-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Agrupamento.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\16px-sort-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\16px-printer-icon.png" />
+    <Resource Include="Imagens\16px-printer-new-icon.png" />
+    <Resource Include="Imagens\32px-printer-icon.png" />
+    <Resource Include="Imagens\32px-printer-new-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\16px-measure-icon.png" />
+    <Resource Include="Imagens\32px-measure-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\16px-undo-icon.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
