@@ -1,6 +1,7 @@
 ﻿using Relacao.Classes;
 using System;
 using System.Collections;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -173,7 +174,7 @@ namespace Relacao
             SQLite sqlite = new SQLite();
             FichaTecnica fichatecnica = new FichaTecnica();
 
-            string query;
+            string queryComponente;
             long produtoID = Convert.ToInt64(txtID.Text);
             long tipoID = Convert.ToInt64(comboTipoComponente.SelectedValue);
             long materiaprimaID = Convert.ToInt64(comboMateriaPrima.SelectedValue);
@@ -217,7 +218,7 @@ namespace Relacao
 
             if (txtBtnInserir.Text.Equals("Inserir"))
             {
-                query = "INSERT INTO FICHATECNICA (" +
+                queryComponente = "INSERT INTO FICHATECNICA (" +
                     "IDPRODUTO," +
                     "IDCOMPONENTE," +
                     "QUANTIDADE," +
@@ -235,7 +236,7 @@ namespace Relacao
 
                 if (sqlite.Connect())
                 {
-                    fichatecnica.ID = sqlite.InsertQuery(query, "FICHATECNICA");
+                    fichatecnica.ID = sqlite.InsertQuery(queryComponente, "FICHATECNICA");
 
                     fichatecnicaList.Add(fichatecnica);
                     fichatecnicaList.UpdateCollection();
@@ -250,7 +251,7 @@ namespace Relacao
             {
                 fichatecnica.ID = ((FichaTecnica)gridDados.SelectedItem).ID;
 
-                query = "UPDATE FICHATECNICA SET " +
+                queryComponente = "UPDATE FICHATECNICA SET " +
                     "IDPRODUTO=" + fichatecnica.Produto.ID.ToString() + "," +
                     "IDCOMPONENTE=" + fichatecnica.Componente.ID.ToString() + "," +
                     "QUANTIDADE=" + fichatecnica.Quantidade.ToString().Replace(',', '.') + "," +
@@ -262,7 +263,7 @@ namespace Relacao
 
                 if (sqlite.Connect())
                 {
-                    if (sqlite.UpdateQuery(query))
+                    if (sqlite.UpdateQuery(queryComponente))
                     {
                         gridDados.IsEnabled = true;
                         ChangeItemValues(fichatecnicaList, fichatecnica);
@@ -426,10 +427,15 @@ namespace Relacao
 
             string queryTiposComponentes = "SELECT ID,DESCRICAO FROM TIPOCOMPONENTE ORDER BY DESCRICAO";
             string queryMateriasPrimas = "SELECT ID,DESCRICAO FROM MATERIAPRIMA ORDER BY DESCRICAO";
-
+                        
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                xmlPath = @"C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\" + xmlAgrupamento;
+                xmlPath = ConfigurationManager.AppSettings["PathDB"] + xmlAgrupamento;
+
+                if (xmlPath.Trim() == "")
+                {
+                    xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + xmlAgrupamento;
+                }
             }
             else
             {
