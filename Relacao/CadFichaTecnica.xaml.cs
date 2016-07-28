@@ -209,11 +209,20 @@ namespace Relacao
                 item.InnerText = fichatecnica.Agrupamento;
                 root.InsertAfter(item, root.LastChild);
 
+                try
+                {
+                    xmlDoc.Save(xmlPath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao salvar no arquivo Agrupamento.xml\n" + ex.ToString(),
+                        "Erro de Abertura de Arquivo", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
                 itensAgrupamento.Add(fichatecnica.Agrupamento);
                 itensAgrupamento.Sort();
-                comboFatorAgrup.Items.Refresh();
 
-                xmlDoc.Save(xmlPath);
+                comboFatorAgrup.Items.Refresh();
             }
 
             if (txtBtnInserir.Text.Equals("Inserir"))
@@ -427,43 +436,8 @@ namespace Relacao
 
             string queryTiposComponentes = "SELECT ID,DESCRICAO FROM TIPOCOMPONENTE ORDER BY DESCRICAO";
             string queryMateriasPrimas = "SELECT ID,DESCRICAO FROM MATERIAPRIMA ORDER BY DESCRICAO";
-                        
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                xmlPath = ConfigurationManager.AppSettings["PathDB"];
 
-                if (xmlPath.Trim() == "")
-                {
-                    xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + xmlAgrupamento;
-                }
-                else
-                {
-                    xmlPath += xmlAgrupamento;
-                }
-            }
-            else
-            {
-                xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + xmlAgrupamento;
-            }
-
-            try
-            {
-                xmlDoc.Load(xmlPath);
-
-                foreach (XmlNode node in xmlDoc.DocumentElement.ChildNodes)
-                {
-                    itensAgrupamento.Add(node.InnerText);
-                }
-
-                itensAgrupamento.Sort();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Erro ao abrir arquivo Agrupamento.xml\n" + ex.ToString(),
-                    "Erro de Abertura de Arquivo", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-            comboFatorAgrup.ItemsSource = itensAgrupamento;
+            PopularComboXML();
 
             if (sqlite.Connect())
             {
@@ -485,6 +459,42 @@ namespace Relacao
             {
                 txtReferencia.Text = this.Produto.Referencia;
             }
+        }
+
+        private void PopularComboXML()
+        {
+            itensAgrupamento.Clear();
+
+            xmlPath = ConfigurationManager.AppSettings["PathDB"];
+
+            if (xmlPath.Trim() == "")
+            {
+                xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + xmlAgrupamento;
+            }
+            else
+            {
+                xmlPath += xmlAgrupamento;
+            }
+
+            try
+            {
+                xmlDoc.Load(xmlPath);
+
+                foreach (XmlNode node in xmlDoc.DocumentElement.ChildNodes)
+                {
+                    itensAgrupamento.Add(node.InnerText);
+                }
+
+                itensAgrupamento.Sort();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao abrir arquivo Agrupamento.xml\n" + ex.ToString(),
+                    "Erro de Abertura de Arquivo", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+            comboFatorAgrup.ItemsSource = itensAgrupamento;
+            comboFatorAgrup.Items.Refresh();
         }
 
         private void btnInserirTipoComponente_Click(object sender, RoutedEventArgs e)
@@ -743,6 +753,11 @@ namespace Relacao
 
             gridDados.Items.Refresh();
             gridDados.SelectedIndex = 0;
+        }
+
+        private void comboFatorAgrup_DropDownOpened(object sender, EventArgs e)
+        {
+            PopularComboXML();
         }
 
     }

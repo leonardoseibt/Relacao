@@ -125,12 +125,8 @@
                 <Label Content="Fator Agrupamento" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,5,5,5" />
                 <TextBox Name="txtObservacoes" Grid.Row="3" Grid.ColumnSpan="3" Margin="0,0,10,0" GotFocus="txtObservacoes_GotFocus" TextChanged="txtObservacoes_TextChanged" MaxLength="100" />
                 <TextBox Name="txtCodigo" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3" Margin="0,0,10,0" GotFocus="txtCodigo_GotFocus" MaxLength="20" />
-                <ComboBox x:Name="comboFatorAgrup" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2" Margin="0" IsEditable="True">
-                    <!--<ComboBoxItem>CNT</ComboBoxItem>
-                    <ComboBoxItem>CORTE GRAU</ComboBoxItem>
-                    <ComboBoxItem>FURADA</ComboBoxItem>
-                    <ComboBoxItem>LIXAR</ComboBoxItem>-->
-                </ComboBox>
+                <ComboBox x:Name="comboFatorAgrup" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2" 
+                          Margin="0" IsEditable="True" DropDownOpened="comboFatorAgrup_DropDownOpened"/>
                 <CheckBox Name="checkLixada" Grid.Row="3" Grid.Column="8" HorizontalAlignment="Center" VerticalAlignment="Center" 
                           Content="Lixada" Margin="10,0,0,0"/>
                 <Button x:Name="btnInserir" Grid.Row="3" Grid.Column="10" Margin="0,0,0,0" HorizontalContentAlignment="Center" 
