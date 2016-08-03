@@ -13,6 +13,8 @@ namespace Relacao
     /// </summary>
     public partial class CadProduto : Window
     {
+        internal Produto Produto { get; set; }
+
         private ObsCollection<Produto> produtosList = new ObsCollection<Produto>();
         private string descricaoOriginal;
         private string referenciaOriginal;
@@ -678,6 +680,22 @@ namespace Relacao
                 txtObservacoes.Text = txtObservacoes.Text.ToUpper();
                 txtObservacoes.SelectionStart = cursorPos;
                 txtObservacoes.SelectionLength = 0;
+            }
+        }
+
+        private void gridDados_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                DataGrid grid = sender as DataGrid;
+                if (grid != null && grid.SelectedItems != null && grid.SelectedItems.Count == 1)
+                {
+                    DataGridRow dgr = grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItem) as DataGridRow;
+
+                    this.Produto = (Produto)dgr.Item;
+
+                    this.Close();
+                }
             }
         }
 

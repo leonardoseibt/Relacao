@@ -36,7 +36,7 @@ namespace Relacao
             else
             {
                 txtReferencia.Text = this.Produto.Referencia;
-                BuscarProduto();
+                BuscarProdutoExecuted();
             }
         }
 
@@ -58,10 +58,10 @@ namespace Relacao
 
         private void Buscar_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            BuscarProduto();
+            BuscarProdutoExecuted();
         }
 
-        private void BuscarProduto()
+        private void BuscarProdutoExecuted()
         {
             fichatecnicaList.Clear();
 
@@ -240,6 +240,17 @@ namespace Relacao
         {
             CadProduto formulario = new CadProduto();
             formulario.ShowDialog();
+
+            if (formulario.Produto != null)
+            {
+                txtReferencia.Text = formulario.Produto.Referencia;
+
+                BuscarProdutoExecuted();
+            }
+            else
+            {
+                txtReferencia.Focus();
+            }
 
             GC.Collect();
         }

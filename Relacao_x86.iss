@@ -19,6 +19,8 @@ Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\R
 Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\bin\Debug\Relacao.s3db"; DestDir: "{app}"; Flags: ignoreversion onlyifdoesntexist
 Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\bin\Debug\System.Data.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\bin\Debug\Xceed.Wpf.Toolkit.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\bin\Debug\Relacao.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\bin\Debug\Agrupamento.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\Relatorios\RelComponente.rpt"; DestDir: "{app}\Relatorios"; Flags: ignoreversion
 Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\Relatorios\RelFichaTecnica.rpt"; DestDir: "{app}\Relatorios"; Flags: ignoreversion
 Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\Relatorios\RelFichaTecnica Agrupada.rpt"; DestDir: "{app}\Relatorios"; Flags: ignoreversion
@@ -34,8 +36,6 @@ Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\R
 Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\Relatorios\RelTipoMateriaPrima.rpt"; DestDir: "{app}\Relatorios"; Flags: ignoreversion
 Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\Relatorios\RelTipoProduto.rpt"; DestDir: "{app}\Relatorios"; Flags: ignoreversion
 Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\Imagens\Letter-R.ico"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\bin\Debug\Relacao.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\bin\Debug\Agrupamento.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Program Files (x86)\SQLite ODBC Driver\sqlite3odbc.dll"; DestDir: "{sys}"
 Source: "..\..\..\..\Downloads\CRRuntime_32bit_13_0_17.msi"; DestDir: "{tmp}"; Flags: deleteafterinstall
 Source: "..\..\..\..\Downloads\NDP452-KB2901907-x86-x64-AllOS-ENU.exe"; DestDir: "{tmp}"; Flags: deleteafterinstall

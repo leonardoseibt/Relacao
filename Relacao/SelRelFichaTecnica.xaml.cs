@@ -30,6 +30,11 @@ namespace Relacao
 
         private void Buscar_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            BuscarExecuted();
+        }
+
+        private void BuscarExecuted()
+        {
             SQLite sqlite = new SQLite();
             Produto produto = new Produto();
 
@@ -183,6 +188,17 @@ namespace Relacao
         {
             CadProduto formulario = new CadProduto();
             formulario.ShowDialog();
+
+            if (formulario.Produto != null)
+            {
+                txtReferencia.Text = formulario.Produto.Referencia;
+
+                BuscarExecuted();
+            }
+            else
+            {
+                txtReferencia.Focus();
+            }
 
             GC.Collect();
         }

@@ -30,7 +30,8 @@
             </StackPanel>
         </Button>
         <DataGrid Margin="0,10,0,10" Name="gridDados" Grid.Row="2" Grid.ColumnSpan="2" AutoGenerateColumns="False" 
-                  SelectionMode="Single" CanUserResizeRows="False" IsReadOnly="True" ItemsSource="{Binding}" RowHeaderWidth="0">
+                  SelectionMode="Single" CanUserResizeRows="False" IsReadOnly="True" ItemsSource="{Binding}" RowHeaderWidth="0"
+                  MouseDoubleClick="gridDados_MouseDoubleClick">
             <DataGrid.Resources>
                 <ContextMenu x:Key="myContextMenu">
                     <MenuItem Name="menuAlterar" Header="Alterar" Click="menuAlterar_Click">

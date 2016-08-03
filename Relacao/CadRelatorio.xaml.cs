@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Relacao
@@ -11,6 +12,9 @@ namespace Relacao
     /// </summary>
     public partial class CadRelatorio : Window
     {
+        //internal bool Seleciona { get; set; }
+        internal Relatorio Relatorio { get; set; }
+
         private ObsCollection<Relatorio> relatoriosList = new ObsCollection<Relatorio>();
         private string descricaoOriginal;
 
@@ -239,6 +243,22 @@ namespace Relacao
                 txtDescricao.Text = txtDescricao.Text.ToUpper();
                 txtDescricao.SelectionStart = cursorPos;
                 txtDescricao.SelectionLength = 0;
+            }
+        }
+
+        private void gridDados_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                DataGrid grid = sender as DataGrid;
+                if (grid != null && grid.SelectedItems != null && grid.SelectedItems.Count == 1)
+                {
+                    DataGridRow dgr = grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItem) as DataGridRow;
+
+                    this.Relatorio = (Relatorio)dgr.Item;
+
+                    this.Close();
+                }
             }
         }
 

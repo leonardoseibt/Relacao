@@ -34,6 +34,11 @@ namespace Relacao
 
         private void Buscar_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            BuscarProdutoExecuted();
+        }
+
+        private void BuscarProdutoExecuted()
+        {
             SQLite sqlite = new SQLite();
             Produto produto = new Produto();
 
@@ -546,16 +551,6 @@ namespace Relacao
             e.Handled = !OnlyNumeric(e.Text);
         }
 
-        private void btnInserirRelatorio_Click(object sender, RoutedEventArgs e)
-        {
-            CadRelatorio formulario = new CadRelatorio();
-            formulario.ShowDialog();
-
-            GC.Collect();
-
-            txtRelatorio.Focus();
-        }
-
         private void BuscarRelatorio_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             if (txtRelatorio.Text.Trim().Count() > 0)
@@ -565,6 +560,11 @@ namespace Relacao
         }
 
         private void BuscarRelatorio_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            BuscarRelatorioExecuted();
+        }
+
+        private void BuscarRelatorioExecuted()
         {
             itensFichaTecnica.Clear();
             SQLite sqlite = new SQLite();
@@ -637,13 +637,42 @@ namespace Relacao
 
                 txtRelatorio.Focus();
             }
+        }
 
+        private void btnInserirRelatorio_Click(object sender, RoutedEventArgs e)
+        {
+            CadRelatorio formulario = new CadRelatorio();
+            formulario.ShowDialog();
+
+            if (formulario.Relatorio != null)
+            {
+                txtRelatorio.Text = formulario.Relatorio.ID.ToString();
+
+                BuscarRelatorioExecuted();
+            }
+            else
+            {
+                txtRelatorio.Focus();
+            }
+
+            GC.Collect();
         }
 
         private void btnInserirProduto_Click(object sender, RoutedEventArgs e)
         {
             CadProduto formulario = new CadProduto();
             formulario.ShowDialog();
+
+            if (formulario.Produto != null)
+            {
+                txtReferencia.Text = formulario.Produto.Referencia;
+
+                BuscarProdutoExecuted();
+            }
+            else
+            {
+                txtReferencia.Focus();
+            }
 
             GC.Collect();
         }

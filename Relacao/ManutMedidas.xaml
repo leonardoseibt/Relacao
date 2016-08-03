@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:commands="clr-namespace:Relacao"
-        Title="Manutenção de Medidas da Ficha Técnica de Produto" Height="650" Width="1124"
+        Title="Manutenção de Medidas da Ficha Técnica de Produto" Height="600" Width="1124"
         WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Icon="Imagens/Letter-R.ico"
         Loaded="Window_Loaded" KeyDown="Window_KeyDown" Closing="Window_Closing">
     <Window.CommandBindings>

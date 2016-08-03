@@ -41,10 +41,10 @@ namespace Relacao
 
         private void Buscar_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            BuscarProduto();
+            BuscarProdutoExecuted();
         }
 
-        private void BuscarProduto()
+        private void BuscarProdutoExecuted()
         {
             fichatecnicaList.Clear();
 
@@ -258,7 +258,8 @@ namespace Relacao
             }
             else if (txtBtnInserir.Text.Equals("Salvar"))
             {
-                fichatecnica.ID = ((FichaTecnica)gridDados.SelectedItem).ID;
+                //fichatecnica.ID = ((FichaTecnica)gridDados.SelectedItem).ID;
+                fichatecnica.ID = ((FichaTecnica)gridDados.SelectedCells[0].Item).ID;
 
                 queryComponente = "UPDATE FICHATECNICA SET " +
                     "IDPRODUTO=" + fichatecnica.Produto.ID.ToString() + "," +
@@ -365,7 +366,8 @@ namespace Relacao
         private void menuAlterar_Click(object sender, RoutedEventArgs e)
         {
             FichaTecnica fichatecnica = new FichaTecnica();
-            fichatecnica = (FichaTecnica)gridDados.SelectedItem;
+            //fichatecnica = (FichaTecnica)gridDados.SelectedItem;
+            fichatecnica = (FichaTecnica)gridDados.SelectedCells[0].Item;
 
             txtBtnInserir.Text = "Salvar";
 
@@ -392,7 +394,8 @@ namespace Relacao
             FichaTecnica fichatecnica = new FichaTecnica();
             string query;
 
-            fichatecnica = (FichaTecnica)gridDados.SelectedItem;
+            //fichatecnica = (FichaTecnica)gridDados.SelectedItem;
+            fichatecnica = (FichaTecnica)gridDados.SelectedCells[0].Item;
             query = "DELETE FROM FICHATECNICA WHERE ID=" + fichatecnica.ID;
 
             if (MessageBox.Show("Confirma exclusão?\n" + fichatecnica.Componente.Tipo.Descricao + " - " +
@@ -656,6 +659,17 @@ namespace Relacao
             CadProduto formulario = new CadProduto();
             formulario.ShowDialog();
 
+            if (formulario.Produto != null)
+            {
+                txtReferencia.Text = formulario.Produto.Referencia;
+
+                BuscarProdutoExecuted();
+            }
+            else
+            {
+                txtReferencia.Focus();
+            }
+
             GC.Collect();
         }
 
@@ -723,7 +737,7 @@ namespace Relacao
 
             GC.Collect();
 
-            BuscarProduto();
+            BuscarProdutoExecuted();
         }
 
         private void txtObservacoes_TextChanged(object sender, TextChangedEventArgs e)
