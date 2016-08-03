@@ -123,7 +123,7 @@
                 <Label Content="Observações" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,5,5,5" />
                 <Label Content="Código" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,5,5,5" />
                 <Label Content="Fator Agrupamento" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,5,5,5" />
-                <TextBox Name="txtObservacoes" Grid.Row="3" Grid.ColumnSpan="3" Margin="0,0,10,0" GotFocus="txtObservacoes_GotFocus" TextChanged="txtObservacoes_TextChanged" MaxLength="100" />
+                <TextBox Name="txtObservacoes" Grid.Row="3" Grid.ColumnSpan="3" Margin="0,0,10,0" GotFocus="txtObservacoes_GotFocus" TextChanged="txtObservacoes_TextChanged" MaxLength="120" />
                 <TextBox Name="txtCodigo" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="3" Margin="0,0,10,0" GotFocus="txtCodigo_GotFocus" MaxLength="20" />
                 <ComboBox x:Name="comboFatorAgrup" Grid.Row="3" Grid.Column="6" Grid.ColumnSpan="2" 
                           Margin="0" IsEditable="True" DropDownOpened="comboFatorAgrup_DropDownOpened"/>
