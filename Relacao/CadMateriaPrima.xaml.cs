@@ -75,7 +75,7 @@ namespace Relacao
                     }
                     else
                     {
-                        MessageBox.Show("A Matéria-Prima Informada Já Existe no Cadastro",
+                        MessageBox.Show("Nada foi alterado!!!",
                         "Erro de Busca de Dados", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
