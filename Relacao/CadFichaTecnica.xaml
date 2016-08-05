@@ -183,6 +183,8 @@
                 <DataGridCheckBoxColumn Header="LIXADA" Width="50*" Binding="{Binding Lixada}" />
                 <DataGridTextColumn Header="AGRUP" Width="80*" Binding="{Binding Agrupamento}" />
                 <DataGridTextColumn Header="OBSERVAÇÕES" Width="280*" Binding="{Binding Observacoes}" />
+                <DataGridTextColumn Header="CORCOMPRIMENTO" Width="50*" Binding="{Binding CorComprimento}" Visibility="Hidden" />
+                <DataGridTextColumn Header="CORLARGURA" Width="50*" Binding="{Binding CorLargura}" Visibility="Hidden" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

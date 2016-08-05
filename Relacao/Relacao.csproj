@@ -393,6 +393,17 @@
   <ItemGroup>
     <Resource Include="Agrupamento.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\16px-blue-ball-icon.png" />
+    <Resource Include="Imagens\16px-orange-ball-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\16px-clear-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\32px-blue-ball-icon.png" />
+    <Resource Include="Imagens\32px-orange-ball-icon.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

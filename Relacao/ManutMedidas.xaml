@@ -14,6 +14,16 @@
                         CanExecute="AlterarMedidasFichaTecnica_CanExecute"
                         Executed="AlterarMedidasFichaTecnica_Executed"/>
     </Window.CommandBindings>
+    <Window.Resources>
+        <Style x:Key="CellStyleComprimento" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="Yellow" />
+            <Setter Property="Foreground" Value="Blue" />
+        </Style>
+        <Style x:Key="CellStyleProfundidade" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="Yellow" />
+            <Setter Property="Foreground" Value="Orange" />
+        </Style>
+    </Window.Resources>
     <Grid Margin="10,0,10,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2.5*" />
@@ -39,6 +49,7 @@
         </Grid.RowDefinitions>
         <Label Content="Referência" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,5,5,5" />
         <Label Content="Produto" Grid.Column="5" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,5,5,5" />
+        <Label Content="Legenda (Padrões de Aumento)" Grid.Column="11" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="0,5,5,5" />
         <TextBox Name="txtReferencia" Grid.Row="1" Margin="0,0,10,0" GotFocus="txtReferencia_GotFocus" 
                  TextChanged="txtReferencia_TextChanged" LostFocus="txtReferencia_LostFocus" MaxLength="20" />
         <Button x:Name="btnBuscarProduto" Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center"
@@ -56,7 +67,41 @@
         <TextBox Name="txtDescricao" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="5" Margin="0,0,10,0" IsEnabled="False" />
         <DataGrid Margin="0,10,0,0" x:Name="gridDados" Grid.Row="2" Grid.ColumnSpan="13" AutoGenerateColumns="False" 
                   SelectionMode="Extended" CanUserResizeRows="False" IsReadOnly="True" RowHeaderWidth="0" SelectionUnit="Cell" 
-                  MouseLeftButtonUp="gridDados_MouseLeftButtonUp">
+                  MouseLeftButtonUp="gridDados_MouseLeftButtonUp" >
+            <DataGrid.Resources>
+                <ContextMenu x:Key="myContextMenu">
+                    <MenuItem x:Name="menuMarcarComprimento" Header="Marcar como padrão de aumento para Comprimento" 
+                              Click="menuMarcarComprimento_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Imagens/16px-blue-ball-icon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="menuMarcarProfundidade" Header="Marcar como padrão de aumento para Profundidade" 
+                              Click="menuMarcarProfundidade_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Imagens/16px-orange-ball-icon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem x:Name="menuDesmarcar" Header="Desmarcar como padrão de aumento" 
+                              Click="menuDesmarcar_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Imagens/16px-clear-icon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem x:Name="menuSort" Header="Ordenar pelo Relatório" Click="menuSort_Click">
+                        <MenuItem.Icon>
+                            <Image Source="/Imagens/16px-sort-icon.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </DataGrid.Resources>
+            <!--<DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Setter Property="ContextMenu" Value="{StaticResource myContextMenu}"/>
+                </Style>
+            </DataGrid.CellStyle>-->
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Width="50*" Binding="{Binding ID}" Visibility="Hidden" />
                 <DataGridTextColumn Header="IDPRODUTO" Width="50*" Binding="{Binding Produto.ID}" Visibility="Hidden" />
@@ -66,8 +111,22 @@
                 <DataGridTextColumn Header="IDCOMPONENTE" Width="50*" Foreground="Gray" Binding="{Binding Componente.ID}" Visibility="Hidden" />
                 <DataGridTextColumn Header="IDTIPO" Width="50*" Foreground="Gray" Binding="{Binding Componente.Tipo.ID}" Visibility="Hidden" />
                 <DataGridTextColumn Header="TIPO" Width="130*" Foreground="Gray" Binding="{Binding Componente.Tipo.Descricao}" />
-                <DataGridTextColumn Header="COMP" Width="55*" Binding="{Binding Componente.Comprimento}" />
-                <DataGridTextColumn Header="LARG" Width="55*" Binding="{Binding Componente.Largura}" />
+                <DataGridTextColumn Header="COMP" Width="55*" Binding="{Binding Componente.Comprimento}" >
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Foreground" Value="{Binding CorComprimento}" />
+                            <Setter Property="ContextMenu" Value="{StaticResource myContextMenu}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="LARG" Width="55*" Binding="{Binding Componente.Largura}" >
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Foreground" Value="{Binding CorLargura}" />
+                            <Setter Property="ContextMenu" Value="{StaticResource myContextMenu}" />
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="ESPES" Width="55*" Binding="{Binding Componente.Espessura}" />
                 <DataGridTextColumn Header="IDMATERIAPRIMA" Width="50*" Foreground="Gray" Binding="{Binding Componente.MateriaPrima.ID}" Visibility="Hidden" />
                 <DataGridTextColumn Header="MATÉRIA-PRIMA" Width="240*" Foreground="Gray" Binding="{Binding Componente.MateriaPrima.Descricao}" />
@@ -75,12 +134,23 @@
                 <DataGridTextColumn Header="AGRUP" Width="80*" Foreground="Gray" Binding="{Binding Agrupamento}" />
                 <DataGridTextColumn Header="OBSERVAÇÕES" Width="280*" Foreground="Gray" Binding="{Binding Observacoes}" />
                 <DataGridCheckBoxColumn Header="ALTERADO" Width="50*" Binding="{Binding Alterado}" Visibility="Hidden" />
+                <DataGridTextColumn Header="CORCOMPRIMENTO" Width="50*" Binding="{Binding CorComprimento}" Visibility="Hidden" />
+                <DataGridTextColumn Header="CORLARGURA" Width="50*" Binding="{Binding CorLargura}" Visibility="Hidden" />
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="Selecione Comprimento/Largura/Espessura, Informe os Valores nos Campos ao Lado e Clique em Alterar >>>" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="9" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="0,5,20,5" />
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="11">
+            <Image Source="/Imagens/32px-blue-ball-icon.png" />
+            <Label Content="Comprimento" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="12">
+            <Image Source="/Imagens/32px-orange-ball-icon.png" />
+            <Label Content="Profundidade" />
+        </StackPanel>
         <Label Content="Comprimento" Grid.Row="3" Grid.Column="9" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,5,5,5" />
         <Label Content="Largura" Grid.Row="3" Grid.Column="10" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,5,5,5" />
         <Label Content="Espessura" Grid.Row="3" Grid.Column="11" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="0,5,5,5" />
+        <Label Content="Selecione Comprimento/Largura/Espessura, Informe os Valores nos Campos ao Lado e Clique em Alterar >>>" 
+               Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="9" HorizontalAlignment="Right" VerticalAlignment="Center" Padding="0,5,20,5" />
         <xctk:DecimalUpDown Name="txtComprimento" Grid.Row="4" Grid.Column="9" Margin="0,0,10,0" CultureInfo="pt-BR" Increment="10"
                             Maximum="10000" Minimum="-10000" DefaultValue="0" PreviewTextInput="txtComprimento_PreviewTextInput" DisplayDefaultValueOnEmptyText="True" />
         <xctk:DecimalUpDown Name="txtLargura" Grid.Row="4" Grid.Column="10" Margin="0,0,10,0" CultureInfo="pt-BR" Increment="10"

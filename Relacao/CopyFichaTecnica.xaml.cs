@@ -1,9 +1,11 @@
 ﻿using Relacao.Classes;
 using System;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Relacao
 {
@@ -101,6 +103,13 @@ namespace Relacao
             }
         }
 
+        static string GetColorName(Color color)
+        {
+            PropertyInfo colorProperty = typeof(Colors).GetProperties().FirstOrDefault(p => Color.AreClose((Color)p.GetValue(null), color));
+
+            return colorProperty != null ? colorProperty.Name : "Cor Sem Nome";
+        }
+
         private void InsereFichaTecnica(ObsCollection<FichaTecnica> itens, Produto produto, SQLite sqlite)
         {
             string query;
@@ -110,18 +119,30 @@ namespace Relacao
             {
                 foreach (FichaTecnica fichatecnica in itens)
                 {
+                    if (fichatecnica.CorComprimento == null)
+                        fichatecnica.CorComprimento = Brushes.Black;
+
+                    if (fichatecnica.CorLargura == null)
+                        fichatecnica.CorLargura = Brushes.Black;
+
                     query = "INSERT INTO FICHATECNICA (" +
                         "IDPRODUTO," +
                         "IDCOMPONENTE," +
                         "QUANTIDADE," +
                         "LIXADA," +
                         "APROVEITAMENTO," +
+                        "AGRUPAMENTO," +
+                        "CORCOMPRIMENTO," +
+                        "CORLARGURA," +
                         "OBSERVACOES) VALUES (" +
                         produto.ID.ToString() + "," +
                         fichatecnica.Componente.ID.ToString() + "," +
                         fichatecnica.Quantidade.ToString().Replace(',', '.') + "," +
                         (fichatecnica.Lixada.Equals(true) ? 1 : 0).ToString() + "," +
                         (fichatecnica.Aproveitamento.Equals(true) ? 1 : 0).ToString() + ",'" +
+                        fichatecnica.Agrupamento + "','" +
+                        GetColorName(fichatecnica.CorComprimento.Color) + "','" +
+                        GetColorName(fichatecnica.CorLargura.Color) + "','" +
                         fichatecnica.Observacoes + "')";
 
                     fichatecnica.ID = sqlite.InsertQuery(query, "FICHATECNICA");

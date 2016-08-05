@@ -2,6 +2,7 @@
 using System;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -69,6 +70,8 @@ namespace Relacao
             DataTable table = new DataTable();
             Produto produto = new Produto();
 
+            string corComp = "";
+            string corLarg = "";
             string queryFichaTecnica;
             string referencia = txtReferencia.Text.Trim();
             int produtoID = sqlite.GetIDByReferencia(referencia);
@@ -97,7 +100,9 @@ namespace Relacao
                     "         FICHATECNICA.APROVEITAMENTO, " +
                     "         FICHATECNICA.OBSERVACOES, " +
                     "         COMPONENTE.CODIGO, " +
-                    "         FICHATECNICA.AGRUPAMENTO " +
+                    "         FICHATECNICA.AGRUPAMENTO, " +
+                    "         FICHATECNICA.CORCOMPRIMENTO, " +
+                    "         FICHATECNICA.CORLARGURA " +
                     "    FROM FICHATECNICA, " +
                     "         PRODUTO, " +
                     "         COMPONENTE, " +
@@ -148,6 +153,23 @@ namespace Relacao
                                 fichatecnica.Agrupamento = "";
                             else
                                 fichatecnica.Agrupamento = (string)row[16];
+
+                            corComp = row[17] as string;
+                            corLarg = row[18] as string;
+
+                            if (corComp == "Blue")
+                                fichatecnica.CorComprimento = Brushes.Blue;
+                            else if (corComp == "Orange")
+                                fichatecnica.CorComprimento = Brushes.Orange;
+                            else
+                                fichatecnica.CorComprimento = Brushes.Black;
+
+                            if (corLarg == "Blue")
+                                fichatecnica.CorLargura = Brushes.Blue;
+                            else if (corLarg == "Orange")
+                                fichatecnica.CorLargura = Brushes.Orange;
+                            else
+                                fichatecnica.CorLargura = Brushes.Black;
 
                             fichatecnicaList.Add(fichatecnica);
                         }
@@ -319,9 +341,16 @@ namespace Relacao
 
         public static bool OnlyNumeric(string text)
         {
-            Regex regex = new Regex("[^0-9]+");
+            Regex regex = new Regex("[^0-9-]+");
 
             return !regex.IsMatch(text);
+        }
+
+        static string GetColorName(Color color)
+        {
+            PropertyInfo colorProperty = typeof(Colors).GetProperties().FirstOrDefault(p => Color.AreClose((Color)p.GetValue(null), color));
+            
+            return colorProperty != null ? colorProperty.Name : "Cor Sem Nome";
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -353,6 +382,8 @@ namespace Relacao
                                 "LIXADA," +
                                 "APROVEITAMENTO," +
                                 "AGRUPAMENTO," +
+                                "CORCOMPRIMENTO," +
+                                "CORLARGURA," +
                                 "OBSERVACOES) VALUES (" +
                                 fichatecnica.Produto.ID.ToString() + "," +
                                 newComponenteID.ToString() + "," +
@@ -360,6 +391,8 @@ namespace Relacao
                                 (fichatecnica.Lixada.Equals(true) ? 1 : 0).ToString() + "," +
                                 (fichatecnica.Aproveitamento.Equals(true) ? 1 : 0).ToString() + ",'" +
                                 fichatecnica.Agrupamento + "','" +
+                                GetColorName(fichatecnica.CorComprimento.Color) + "','" +
+                                GetColorName(fichatecnica.CorLargura.Color) + "','" +
                                 fichatecnica.Observacoes + "')";
 
                             if (sqlite.Connect())
@@ -413,6 +446,91 @@ namespace Relacao
             }
 
             return retorno;
+        }
+
+        private void menuMarcarComprimento_Click(object sender, RoutedEventArgs e)
+        {
+            alterado = true;
+
+            foreach (DataGridCellInfo cell in gridDados.SelectedCells)
+            {
+                FichaTecnica item = (FichaTecnica)cell.Item;
+
+                if (cell.Column.Header.Equals("COMP"))
+                {
+                    item.CorComprimento = Brushes.Blue;
+                    item.Alterado = true;
+                }
+                else if (cell.Column.Header.Equals("LARG"))
+                {
+                    item.CorLargura = Brushes.Blue;
+                    item.Alterado = true;
+                }
+            }
+
+            gridDados.Items.Refresh();
+        }
+
+        private void menuMarcarProfundidade_Click(object sender, RoutedEventArgs e)
+        {
+            alterado = true;
+
+            foreach (DataGridCellInfo cell in gridDados.SelectedCells)
+            {
+                FichaTecnica item = (FichaTecnica)cell.Item;
+
+                if (cell.Column.Header.Equals("COMP"))
+                {
+                    item.CorComprimento = Brushes.Orange;
+                    item.Alterado = true;
+                }
+                else if (cell.Column.Header.Equals("LARG"))
+                {
+                    item.CorLargura = Brushes.Orange;
+                    item.Alterado = true;
+                }
+            }
+
+            gridDados.Items.Refresh();
+        }
+
+        private void menuDesmarcar_Click(object sender, RoutedEventArgs e)
+        {
+            alterado = true;
+
+            foreach (DataGridCellInfo cell in gridDados.SelectedCells)
+            {
+                FichaTecnica item = (FichaTecnica)cell.Item;
+
+                if (cell.Column.Header.Equals("COMP"))
+                {
+                    item.CorComprimento = Brushes.Black;
+                    item.Alterado = true;
+                }
+                else if (cell.Column.Header.Equals("LARG"))
+                {
+                    item.CorLargura = Brushes.Black;
+                    item.Alterado = true;
+                }
+            }
+
+            gridDados.Items.Refresh();
+        }
+
+        private void menuSort_Click(object sender, RoutedEventArgs e)
+        {
+            gridDados.Items.SortDescriptions.Clear();
+
+            gridDados.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Componente.Tipo.Descricao",
+                    System.ComponentModel.ListSortDirection.Ascending));
+            gridDados.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Componente.Espessura",
+                    System.ComponentModel.ListSortDirection.Ascending));
+            gridDados.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Componente.Largura",
+                                System.ComponentModel.ListSortDirection.Ascending));
+            gridDados.Items.SortDescriptions.Add(new System.ComponentModel.SortDescription("Componente.Comprimento",
+                                System.ComponentModel.ListSortDirection.Ascending));
+
+            gridDados.Items.Refresh();
         }
 
     }

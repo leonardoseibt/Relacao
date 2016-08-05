@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Xml;
 
 namespace Relacao
@@ -52,6 +53,8 @@ namespace Relacao
             DataTable table = new DataTable();
             Produto produto = new Produto();
 
+            string corComp = "";
+            string corLarg = "";
             string queryFichaTecnica;
             string referencia = txtReferencia.Text.Trim();
             int produtoID = sqlite.GetIDByReferencia(referencia);
@@ -80,7 +83,9 @@ namespace Relacao
                     "         FICHATECNICA.APROVEITAMENTO, " +
                     "         FICHATECNICA.OBSERVACOES, " +
                     "         COMPONENTE.CODIGO, " +
-                    "         FICHATECNICA.AGRUPAMENTO " +
+                    "         FICHATECNICA.AGRUPAMENTO, " +
+                    "         FICHATECNICA.CORCOMPRIMENTO, " +
+                    "         FICHATECNICA.CORLARGURA " +
                     "    FROM FICHATECNICA, " +
                     "         PRODUTO, " +
                     "         COMPONENTE, " +
@@ -131,6 +136,23 @@ namespace Relacao
                                 fichatecnica.Agrupamento = "";
                             else
                                 fichatecnica.Agrupamento = (string)row[16];
+
+                            corComp = row[17] as string;
+                            corLarg = row[18] as string;
+
+                            if (corComp == "Blue")
+                                fichatecnica.CorComprimento = Brushes.Blue;
+                            else if (corComp == "Orange")
+                                fichatecnica.CorComprimento = Brushes.Orange;
+                            else
+                                fichatecnica.CorComprimento = Brushes.Black;
+
+                            if (corLarg == "Blue")
+                                fichatecnica.CorLargura = Brushes.Blue;
+                            else if (corLarg == "Orange")
+                                fichatecnica.CorLargura = Brushes.Orange;
+                            else
+                                fichatecnica.CorLargura = Brushes.Black;
 
                             fichatecnicaList.Add(fichatecnica);
                         }
@@ -234,6 +256,8 @@ namespace Relacao
                     "LIXADA," +
                     "APROVEITAMENTO," +
                     "AGRUPAMENTO," +
+                    "CORCOMPRIMENTO," +
+                    "CORLARGURA," +
                     "OBSERVACOES) VALUES (" +
                     fichatecnica.Produto.ID.ToString() + "," +
                     fichatecnica.Componente.ID.ToString() + "," +
@@ -241,6 +265,8 @@ namespace Relacao
                     (fichatecnica.Lixada.Equals(true) ? 1 : 0).ToString() + "," +
                     (fichatecnica.Aproveitamento.Equals(true) ? 1 : 0).ToString() + ",'" +
                     fichatecnica.Agrupamento + "','" +
+                    "Black','" +
+                    "Black','" +
                     fichatecnica.Observacoes + "')";
 
                 if (sqlite.Connect())
