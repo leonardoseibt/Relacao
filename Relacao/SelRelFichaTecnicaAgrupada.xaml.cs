@@ -181,7 +181,7 @@ namespace Relacao
             SQLite sqlite = new SQLite();
 
             if (sqlite.Connect())
-            { // Inserida
+            { 
                 //sqlite.DeleteQueryConnect("DELETE FROM RELATORIOFICHATECNICAAGRUPADA");
                 sqlite.DeleteQuery("DELETE FROM RELATORIOFICHATECNICAAGRUPADA"); // Inserida
 
@@ -408,11 +408,16 @@ namespace Relacao
                 relatorio.Dispose();
                 formulario = null;
                 parametros = null;
-            } //Inserida
+
+                NovoRelatorio();
+            } 
         }
         
         private void txtReferencia_GotFocus(object sender, RoutedEventArgs e)
         {
+            btnBuscarProduto.IsDefault = true;
+            btnBuscarRelatorio.IsDefault = false;
+            btnImprimir.IsDefault = false;
             txtReferencia.SelectAll();
         }
 
@@ -426,8 +431,6 @@ namespace Relacao
                 txtReferencia.SelectionStart = cursorPos;
                 txtReferencia.SelectionLength = 0;
             }
-
-
         }
 
         private void btnCancelar_Click(object sender, RoutedEventArgs e)
@@ -521,28 +524,36 @@ namespace Relacao
         {
             if (e.Key == Key.Escape)
             {
-                gridDados.IsEnabled = true;
-                gridDados.ItemsSource = null;
-
-                txtBtnInserir.Text = "Inserir";
-
-                txtRelatorio.Clear();
-                txtRelConfirmado.Clear();
-                txtRelDescricao.Clear();
-                txtReferencia.Clear();
-                groupRelatorio.IsEnabled = true;
-                groupProduto.IsEnabled = false;
-                groupQuantidade.IsEnabled = false;
-                txtRefConfirmada.Clear();
-                txtDescricao.Clear();
-                txtQuantidade.Value = txtQuantidade.DefaultValue;
-
-                txtRelatorio.Focus();
+                NovoRelatorio();
             }
+        }
+
+        private void NovoRelatorio()
+        {
+            gridDados.IsEnabled = true;
+            gridDados.ItemsSource = null;
+
+            txtBtnInserir.Text = "Inserir";
+
+            txtRelatorio.Clear();
+            txtRelConfirmado.Clear();
+            txtRelDescricao.Clear();
+            txtReferencia.Clear();
+            groupRelatorio.IsEnabled = true;
+            groupProduto.IsEnabled = false;
+            groupQuantidade.IsEnabled = false;
+            txtRefConfirmada.Clear();
+            txtDescricao.Clear();
+            txtQuantidade.Value = txtQuantidade.DefaultValue;
+
+            txtRelatorio.Focus();
         }
 
         private void txtRelatorio_GotFocus(object sender, RoutedEventArgs e)
         {
+            btnBuscarRelatorio.IsDefault = true;
+            btnBuscarProduto.IsDefault = false;
+            btnImprimir.IsDefault = false;
             txtRelatorio.SelectAll();
         }
 

@@ -62,13 +62,9 @@ namespace Relacao
         private void Confirm_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             if (txtRefConfirmada.Text.Trim() != "" && txtDescricao.Text.Trim() != "")
-            {
                 e.CanExecute = true;
-            }
             else
-            {
                 e.CanExecute = false;
-            }
         }
 
         private void Confirm_Executed(object sender, ExecutedRoutedEventArgs e)
