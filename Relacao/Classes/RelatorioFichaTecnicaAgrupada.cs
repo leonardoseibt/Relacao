@@ -8,6 +8,7 @@ namespace Relacao.Classes
         public decimal Quantidade { get; set; }
         public string Medidas { get; set; }
         public decimal Metragem { get; set; }
+        public string Agrupamento { get; set; }
 
         public RelatorioFichaTecnicaAgrupada()
         {

@@ -163,6 +163,27 @@ namespace Relacao
             return retorno;
         }
 
+        internal void InsertSingleQuery(string query)
+        {
+            sqliteTrans = sqliteConn.BeginTransaction();
+
+            sqliteComm = new SQLiteCommand();
+            sqliteComm.Connection = sqliteConn;
+            sqliteComm.CommandType = CommandType.Text;
+            sqliteComm.CommandText = query;
+
+            try
+            {
+                sqliteComm.ExecuteNonQuery();
+                sqliteTrans.Commit();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao inserir no Banco de Dados\n" + ex.ToString(),
+                    "Erro de Inserção", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         internal bool UpdateQuery(string query)
         {
             bool retorno = false;
@@ -1207,6 +1228,30 @@ namespace Relacao
             }
 
             return retorno;
+        }
+
+        internal void SaveDataTableOnSQLite(DataTable table)
+        {
+            foreach (DataRow row in table.Rows)
+            {
+                string query = 
+                    "INSERT INTO RELATORIOFICHATECNICAAGRUPADA ( " +
+                    "       IDRELATORIO, " +
+                    "       IDMATERIAPRIMA, " +
+                    "       QTDPECAS, " +
+                    "       MEDIDAS, " +
+                    "       METRAGEM, " +
+                    "       AGRUPAMENTO) " +
+                    "VALUES ( " +
+                    row["IDRELATORIO"].ToString() + ", " +
+                    row["IDMATERIAPRIMA"].ToString() + ", " +
+                    row["QTDPECAS"].ToString().Replace(',', '.') + ", '" +
+                    row["MEDIDAS"].ToString() + "', " +
+                    row["METRAGEM"].ToString().Replace(',', '.') + ", '" +
+                    row["AGRUPAMENTO"] + "')";
+
+                InsertSingleQuery(query);
+            }
         }
 
     }

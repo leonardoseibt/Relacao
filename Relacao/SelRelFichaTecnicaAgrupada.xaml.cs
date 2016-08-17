@@ -178,12 +178,19 @@ namespace Relacao
 
         private void ImprimeSelecaoRelFichaTecnicaAgrupada_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+            //PrintWithSQLite();
+            PrintWithDataTable();
+
+            NovoRelatorio();
+        }
+
+        private void PrintWithSQLite()
+        {
             SQLite sqlite = new SQLite();
 
             if (sqlite.Connect())
-            { 
-                //sqlite.DeleteQueryConnect("DELETE FROM RELATORIOFICHATECNICAAGRUPADA");
-                sqlite.DeleteQuery("DELETE FROM RELATORIOFICHATECNICAAGRUPADA"); // Inserida
+            {
+                sqlite.DeleteQuery("DELETE FROM RELATORIOFICHATECNICAAGRUPADA");
 
                 string path;
                 string reportFile;
@@ -245,15 +252,12 @@ namespace Relacao
                         "       TIPOMATERIAPRIMA.ID = MATERIAPRIMA.IDTIPOMATERIAPRIMA AND " +
                         "       FICHATECNICA.IDPRODUTO=" + produtoID.ToString();
 
-                    //table = sqlite.GetTableConnect(queryFichaTecnica);
-                    table = sqlite.GetTable(queryFichaTecnica); // Inserida
+                    table = sqlite.GetTable(queryFichaTecnica);
 
                     if (table.Rows.Count > 0)
                     {
                         foreach (DataRow row in table.Rows)
                         {
-                            //sqlite = new SQLite();
-
                             qtdPorMovel = Convert.ToDecimal(row[0]);
                             comprimento = Convert.ToDecimal(row[1]);
                             largura = Convert.ToDecimal(row[2]);
@@ -306,8 +310,7 @@ namespace Relacao
                                 "       AGRUPAMENTO='" + agrupamento + "'";
 
                             RelatorioFichaTecnicaAgrupada ficha = new RelatorioFichaTecnicaAgrupada();
-                            //ficha = sqlite.GetRelatorioFichaAgrupadaConnect(querySearch);
-                            ficha = sqlite.GetRelatorioFichaAgrupada(querySearch); // Inserida
+                            ficha = sqlite.GetRelatorioFichaAgrupada(querySearch);
 
                             if (ficha.Relatorio.ID == 0)
                             {
@@ -343,17 +346,12 @@ namespace Relacao
                                     "       AGRUPAMENTO='" + agrupamento + "'";
                             }
 
-                            //if (sqlite.Connect())
-                            //{
                             sqlite.UpdateQuery(query);
-
-                            //    sqlite.Disconnect();
-                            //}
                         }
                     }
                 }
 
-                sqlite.Disconnect(); // Inserida
+                sqlite.Disconnect();
                 sqlite = null;
 
                 formulario.Titulo = "RELAÇÃO DE PEÇAS AGRUPADAS POR MEDIDA";
@@ -409,10 +407,257 @@ namespace Relacao
                 formulario = null;
                 parametros = null;
 
-                NovoRelatorio();
-            } 
+            }
         }
-        
+
+        private void PrintWithDataTable()
+        {
+            SQLite sqlite = new SQLite();
+
+            if (sqlite.Connect())
+            {
+                DataTable auxTable = CreateAuxiliarTable("RELATORIOFICHATECNICAAGRUPADA");
+                DataRow auxRow;
+
+                sqlite.DeleteQuery("DELETE FROM RELATORIOFICHATECNICAAGRUPADA");
+
+                string path;
+                string reportFile;
+                ReportDocument relatorio = new ReportDocument();
+                WindowCrystalReports formulario = new WindowCrystalReports();
+                Dictionary<string, string> parametros = new Dictionary<string, string>(); ;
+
+                string unidade = radioCentimetro.IsChecked == true ? "Centimetro" : "Milimetro";
+
+                long relatorioID = Convert.ToInt64(txtRelConfirmado.Text);
+
+                string queryFichaTecnica;
+                string querySearch;
+
+                long produtoID;
+                int qtdLote;
+
+                long materiaprimaID;
+                string materiaprimaUN;
+                string agrupamento;
+                decimal materiaprimaPerda;
+                decimal qtdPorMovel;
+
+                decimal comprimento;
+                decimal largura;
+                decimal espessura;
+
+                decimal metragem;
+
+                string medidas;
+
+                decimal qtdTotal = 0;
+
+                foreach (FichaTecnicaAgrupada item in itensFichaTecnica)
+                {
+                    DataTable table = new DataTable();
+
+                    produtoID = item.Produto.ID;
+                    qtdLote = item.Quantidade;
+
+                    queryFichaTecnica =
+                        "SELECT FICHATECNICA.QUANTIDADE, " +
+                        "       COMPONENTE.COMPRIMENTO, " +
+                        "       COMPONENTE.LARGURA, " +
+                        "       COMPONENTE.ESPESSURA, " +
+                        "       COMPONENTE.IDMATERIAPRIMA IDMP, " +
+                        "       TIPOMATERIAPRIMA.UNIDADE, " +
+                        "       MATERIAPRIMA.PERDA, " +
+                        "       FICHATECNICA.AGRUPAMENTO " +
+                        "  FROM FICHATECNICA, " +
+                        "       TIPOCOMPONENTE, " +
+                        "       COMPONENTE, " +
+                        "       MATERIAPRIMA, " +
+                        "       TIPOMATERIAPRIMA " +
+                        " WHERE COMPONENTE.ID = FICHATECNICA.IDCOMPONENTE AND " +
+                        "       TIPOCOMPONENTE.ID = COMPONENTE.IDTIPOCOMPONENTE AND " +
+                        "       MATERIAPRIMA.ID = COMPONENTE.IDMATERIAPRIMA AND " +
+                        "       TIPOMATERIAPRIMA.ID = MATERIAPRIMA.IDTIPOMATERIAPRIMA AND " +
+                        "       FICHATECNICA.IDPRODUTO=" + produtoID.ToString();
+
+                    table = sqlite.GetTable(queryFichaTecnica);
+
+                    if (table.Rows.Count > 0)
+                    {
+                        foreach (DataRow row in table.Rows)
+                        {
+                            qtdPorMovel = Convert.ToDecimal(row[0]);
+                            comprimento = Convert.ToDecimal(row[1]);
+                            largura = Convert.ToDecimal(row[2]);
+                            espessura = Convert.ToDecimal(row[3]);
+                            materiaprimaID = Convert.ToInt64(row[4]);
+                            materiaprimaUN = row[5].ToString();
+                            materiaprimaPerda = Convert.ToDecimal(row[6]);
+                            agrupamento = row[7].ToString();
+
+                            qtdTotal = qtdPorMovel * qtdLote;
+
+                            if (unidade.Equals("Centimetro"))
+                            {
+                                medidas =
+                                    (comprimento / 10).ToString("N1").Replace('.', ',') + " X " +
+                                    (largura / 10).ToString("N1").Replace('.', ',') + " X " +
+                                    (espessura / 10).ToString("N1").Replace('.', ',');
+                            }
+                            else
+                            {
+                                medidas =
+                                    comprimento.ToString("N0") + " X " +
+                                    largura.ToString("N0") + " X " +
+                                    espessura.ToString("N0");
+                            }
+
+                            if (materiaprimaUN.Equals("M3"))
+                                metragem = (comprimento * largura * espessura / 1000000000) * qtdTotal;
+                            else if (materiaprimaUN.Equals("M2"))
+                                metragem = (comprimento * largura / 1000000) * qtdTotal;
+                            else if (materiaprimaUN.Equals("MT"))
+                                metragem = (comprimento / 1000) * qtdTotal;
+                            else
+                                metragem = comprimento * qtdTotal;
+
+                            if (checkPerda.IsChecked == true)
+                                metragem += metragem * materiaprimaPerda / 100;
+
+                            querySearch =
+                                "IDRELATORIO = " + relatorioID.ToString() + " AND " +
+                                "IDMATERIAPRIMA = " + materiaprimaID.ToString() + " AND " +
+                                "MEDIDAS = '" + medidas + "' AND " +
+                                "AGRUPAMENTO = '" + agrupamento + "'";
+
+                            RelatorioFichaTecnicaAgrupada ficha = new RelatorioFichaTecnicaAgrupada();
+                            DataRow[] result = auxTable.Select(querySearch);
+
+                            if (result.Length > 0)
+                            {
+                                foreach (DataRow rowResult in result)
+                                {
+                                    ficha.Relatorio.ID = Convert.ToInt64(rowResult["IDRELATORIO"]);
+                                    ficha.MateriaPrima.ID = Convert.ToInt64(rowResult["IDMATERIAPRIMA"]);
+                                    ficha.Quantidade = Convert.ToDecimal(rowResult["QTDPECAS"]);
+                                    ficha.Medidas = rowResult["MEDIDAS"].ToString();
+                                    ficha.Metragem = Convert.ToDecimal(rowResult["METRAGEM"]);
+                                    ficha.Agrupamento = rowResult["AGRUPAMENTO"].ToString();
+
+                                    qtdTotal += ficha.Quantidade;
+                                    metragem += ficha.Metragem;
+
+                                    rowResult["QTDPECAS"] = qtdTotal;
+                                    rowResult["METRAGEM"] = metragem;
+                                    rowResult["AGRUPAMENTO"] = agrupamento;
+
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                auxRow = auxTable.NewRow();
+
+                                auxRow["IDRELATORIO"] = relatorioID;
+                                auxRow["IDMATERIAPRIMA"] = materiaprimaID;
+                                auxRow["QTDPECAS"] = qtdTotal;
+                                auxRow["MEDIDAS"] = medidas;
+                                auxRow["METRAGEM"] = metragem;
+                                auxRow["AGRUPAMENTO"] = agrupamento;
+
+                                auxTable.Rows.Add(auxRow);
+                            }
+                        }
+                    }
+                }
+
+                sqlite.SaveDataTableOnSQLite(auxTable);
+
+                sqlite.Disconnect();
+                sqlite = null;
+
+                formulario.Titulo = "RELAÇÃO DE PEÇAS AGRUPADAS POR MEDIDA";
+                
+                if (checkDesmembrada.IsChecked == true)
+                {
+                    reportFile = "RelProdutosAgrupadosDesmembrados.rpt";
+                }
+                else
+                {
+                    reportFile = "RelProdutosAgrupados.rpt";
+                }
+
+                parametros.Add("Relatorio", relatorioID.ToString());
+                parametros.Add("Autor", ConfigurationManager.AppSettings["NomeEmpresa"]);
+                parametros.Add("Titulo", formulario.Titulo);
+
+                if (System.Diagnostics.Debugger.IsAttached)
+                {
+                    path = @"C:\Users\Leonardo Seibt\Documents\Visual Studio 2013\Projects\Relacao\Relacao\Relatorios\" + reportFile;
+                }
+                else
+                {
+                    path = System.AppDomain.CurrentDomain.BaseDirectory + @"Relatorios\" + reportFile;
+                }
+
+                try
+                {
+                    relatorio.Load(path);
+                    
+                    if (relatorio.IsLoaded)
+                    {
+                        formulario.Relatorio = relatorio;
+
+                        if (parametros != null)
+                        {
+                            foreach (KeyValuePair<string, string> par in parametros)
+                            {
+                                formulario.Parametros.Add(par.Key, par.Value);
+                            }
+                        }
+
+                        formulario.ShowDialog();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show("Erro ao abrir relatório\n" + ex.ToString(),
+                        "Relatório", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                relatorio.Dispose();
+                formulario = null;
+                parametros = null;
+
+            }
+        }
+
+        private DataTable CreateAuxiliarTable(string tableName)
+        {
+            DataColumn coluna;
+            DataTable table = new DataTable(tableName);
+
+            coluna = new DataColumn("IDRELATORIO", typeof(Int32));
+            table.Columns.Add(coluna);
+
+            coluna = new DataColumn("IDMATERIAPRIMA", typeof(Int32));
+            table.Columns.Add(coluna);
+
+            coluna = new DataColumn("QTDPECAS", typeof(Decimal));
+            table.Columns.Add(coluna);
+
+            coluna = new DataColumn("MEDIDAS", typeof(string));
+            table.Columns.Add(coluna);
+
+            coluna = new DataColumn("METRAGEM", typeof(Decimal));
+            table.Columns.Add(coluna);
+
+            coluna = new DataColumn("AGRUPAMENTO", typeof(string));
+            table.Columns.Add(coluna);
+
+            return table;
+        }
+
         private void txtReferencia_GotFocus(object sender, RoutedEventArgs e)
         {
             btnBuscarProduto.IsDefault = true;

@@ -15,7 +15,7 @@ namespace Relacao
         internal Dictionary<string, string> Parametros { get; set; }
         internal string FullPath { get; set; }
         internal string Titulo { get; set; }
-
+        
         public WindowCrystalReports()
         {
             this.Parametros = new Dictionary<string, string>();
