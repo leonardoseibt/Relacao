@@ -416,8 +416,10 @@ namespace Relacao
 
             if (sqlite.Connect())
             {
-                DataTable auxTable = CreateAuxiliarTable("RELATORIOFICHATECNICAAGRUPADA");
-                DataRow auxRow;
+                DataTable tableRelatorioFichaTecnicaAgrupada = sqlite.CreateTableRelatorioFichaTecnicaAgrupada();
+                //DataTable tableProduto, tableRelatorio, tableMateriaPrima, tableTipoMateriaPrima, tableFichaTecnicaAgrupada;
+                DataRow rowRelatorioFichaTecnicaAgrupada;
+                //DataSet tablesRelatorio = new DataSet();
 
                 sqlite.DeleteQuery("DELETE FROM RELATORIOFICHATECNICAAGRUPADA");
 
@@ -531,7 +533,7 @@ namespace Relacao
                                 "AGRUPAMENTO = '" + agrupamento + "'";
 
                             RelatorioFichaTecnicaAgrupada ficha = new RelatorioFichaTecnicaAgrupada();
-                            DataRow[] result = auxTable.Select(querySearch);
+                            DataRow[] result = tableRelatorioFichaTecnicaAgrupada.Select(querySearch);
 
                             if (result.Length > 0)
                             {
@@ -556,22 +558,35 @@ namespace Relacao
                             }
                             else
                             {
-                                auxRow = auxTable.NewRow();
+                                rowRelatorioFichaTecnicaAgrupada = tableRelatorioFichaTecnicaAgrupada.NewRow();
 
-                                auxRow["IDRELATORIO"] = relatorioID;
-                                auxRow["IDMATERIAPRIMA"] = materiaprimaID;
-                                auxRow["QTDPECAS"] = qtdTotal;
-                                auxRow["MEDIDAS"] = medidas;
-                                auxRow["METRAGEM"] = metragem;
-                                auxRow["AGRUPAMENTO"] = agrupamento;
+                                rowRelatorioFichaTecnicaAgrupada["IDRELATORIO"] = relatorioID;
+                                rowRelatorioFichaTecnicaAgrupada["IDMATERIAPRIMA"] = materiaprimaID;
+                                rowRelatorioFichaTecnicaAgrupada["QTDPECAS"] = qtdTotal;
+                                rowRelatorioFichaTecnicaAgrupada["MEDIDAS"] = medidas;
+                                rowRelatorioFichaTecnicaAgrupada["METRAGEM"] = metragem;
+                                rowRelatorioFichaTecnicaAgrupada["AGRUPAMENTO"] = agrupamento;
 
-                                auxTable.Rows.Add(auxRow);
+                                tableRelatorioFichaTecnicaAgrupada.Rows.Add(rowRelatorioFichaTecnicaAgrupada);
                             }
                         }
                     }
                 }
 
-                sqlite.SaveDataTableOnSQLite(auxTable);
+                sqlite.SaveDataTableOnSQLite(tableRelatorioFichaTecnicaAgrupada);
+
+                //tableProduto = sqlite.GetTableProduto();
+                //tableRelatorio = sqlite.GetTableRelatorio();
+                //tableMateriaPrima = sqlite.GetTableMateriaPrima();
+                //tableTipoMateriaPrima = sqlite.GetTableTipoMateriaPrima();
+                //tableFichaTecnicaAgrupada = sqlite.GetTableFichaTecnicaAgrupada();
+
+                //tablesRelatorio.Tables.Add(tableRelatorioFichaTecnicaAgrupada);
+                //tablesRelatorio.Tables.Add(tableProduto);
+                //tablesRelatorio.Tables.Add(tableRelatorio);
+                //tablesRelatorio.Tables.Add(tableMateriaPrima);
+                //tablesRelatorio.Tables.Add(tableTipoMateriaPrima);
+                //tablesRelatorio.Tables.Add(tableFichaTecnicaAgrupada);
 
                 sqlite.Disconnect();
                 sqlite = null;
@@ -603,9 +618,24 @@ namespace Relacao
                 try
                 {
                     relatorio.Load(path);
-                    
+
                     if (relatorio.IsLoaded)
                     {
+                        //relatorio.SetDataSource(tablesRelatorio);
+
+                        //relatorio.Database.Tables["MATERIAPRIMA"].
+                        //    SetDataSource(tableFichaTecnicaAgrupada);
+                        //relatorio.Database.Tables["MATERIAPRIMA"].
+                        //    SetDataSource(tableMateriaPrima);
+                        //relatorio.Database.Tables["PRODUTO"].
+                        //    SetDataSource(tableProduto);
+                        //relatorio.Database.Tables["RELATORIO"].
+                        //    SetDataSource(tableRelatorio);
+                        //relatorio.Database.Tables["TIPOMATERIAPRIMA"].
+                        //    SetDataSource(tableTipoMateriaPrima);
+                        //relatorio.Database.Tables["RELATORIOFICHATECNICAAGRUPADA"].
+                        //    SetDataSource(tableRelatorioFichaTecnicaAgrupada);
+
                         formulario.Relatorio = relatorio;
 
                         if (parametros != null)
@@ -630,32 +660,6 @@ namespace Relacao
                 parametros = null;
 
             }
-        }
-
-        private DataTable CreateAuxiliarTable(string tableName)
-        {
-            DataColumn coluna;
-            DataTable table = new DataTable(tableName);
-
-            coluna = new DataColumn("IDRELATORIO", typeof(Int32));
-            table.Columns.Add(coluna);
-
-            coluna = new DataColumn("IDMATERIAPRIMA", typeof(Int32));
-            table.Columns.Add(coluna);
-
-            coluna = new DataColumn("QTDPECAS", typeof(Decimal));
-            table.Columns.Add(coluna);
-
-            coluna = new DataColumn("MEDIDAS", typeof(string));
-            table.Columns.Add(coluna);
-
-            coluna = new DataColumn("METRAGEM", typeof(Decimal));
-            table.Columns.Add(coluna);
-
-            coluna = new DataColumn("AGRUPAMENTO", typeof(string));
-            table.Columns.Add(coluna);
-
-            return table;
         }
 
         private void txtReferencia_GotFocus(object sender, RoutedEventArgs e)

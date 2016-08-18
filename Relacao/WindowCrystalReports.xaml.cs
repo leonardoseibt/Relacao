@@ -52,6 +52,7 @@ namespace Relacao
 
             crystalViewer.ViewerCore.ReportSource = this.Relatorio;
             crystalViewer.ViewerCore.ParameterFieldInfo = parameterFields;
+            
         }
 
     }

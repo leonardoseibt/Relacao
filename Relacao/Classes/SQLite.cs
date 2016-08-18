@@ -11,9 +11,9 @@ namespace Relacao
     {
         private SQLiteConnection sqliteConn;
         private SQLiteCommand sqliteComm;
-        private string pathDB;
         private SQLiteTransaction sqliteTrans;
-
+        private string pathDB;
+        
         public SQLite()
         {
             pathDB = ConfigurationManager.AppSettings["PathDB"];
@@ -1253,6 +1253,112 @@ namespace Relacao
                 InsertSingleQuery(query);
             }
         }
+
+        internal DataTable CreateTableRelatorioFichaTecnicaAgrupada()
+        {
+            DataColumn coluna;
+            DataTable table = new DataTable("RELATORIOFICHATECNICAAGRUPADA");
+
+            coluna = new DataColumn("IDRELATORIO", typeof(Int32));
+            table.Columns.Add(coluna);
+            coluna = new DataColumn("IDMATERIAPRIMA", typeof(Int32));
+            table.Columns.Add(coluna);
+            coluna = new DataColumn("QTDPECAS", typeof(Decimal));
+            table.Columns.Add(coluna);
+            coluna = new DataColumn("MEDIDAS", typeof(string));
+            table.Columns.Add(coluna);
+            coluna = new DataColumn("METRAGEM", typeof(Decimal));
+            table.Columns.Add(coluna);
+            coluna = new DataColumn("AGRUPAMENTO", typeof(string));
+            table.Columns.Add(coluna);
+
+            return table;
+        }
+
+        //internal DataTable GetTableProduto()
+        //{
+        //    string query =
+        //        "SELECT ID, " +
+        //        "       IDTIPOPRODUTO, " +
+        //        "       IDPARTICULARIDADE, " +
+        //        "       IDLINHA, " +
+        //        "       REFERENCIA, " +
+        //        "       DESCRICAO, " +
+        //        "       MEDIDAS, " +
+        //        "       OBSERVACOES " +
+        //        "  FROM PRODUTO";
+
+        //    DataTable table = GetTable(query);
+        //    table.TableName = "PRODUTO";
+            
+        //    return table;
+        //}
+
+        //internal DataTable GetTableFichaTecnicaAgrupada()
+        //{
+        //    string query =
+        //        "SELECT IDRELATORIO, " +
+        //        "       IDPRODUTO, " +
+        //        "       QUANTIDADE " +
+        //        "  FROM FICHATECNICAAGRUPADA";
+
+        //    DataTable table = GetTable(query);
+        //    table.TableName = "FICHATECNICAAGRUPADA";
+
+        //    return table;
+        //}
+
+        //internal DataTable GetTableMateriaPrima()
+        //{
+        //    string query =
+        //        "SELECT ID, " +
+        //        "       IDTIPOMATERIAPRIMA, " +
+        //        "       IDSUBTIPOMATERIAPRIMA, " +
+        //        "       DESCRICAO, " +
+        //        "       BITOLA, " +
+        //        "       PERDA, " +
+        //        "       OBSERVACOES " +
+        //        "  FROM MATERIAPRIMA";
+
+        //    DataTable table = GetTable(query);
+        //    table.TableName = "MATERIAPRIMA";
+
+        //    return table;
+        //}
+
+        //internal DataTable GetTableRelatorio()
+        //{
+        //    string query =
+        //        "SELECT ID,DESCRICAO " +
+        //        "  FROM RELATORIO";
+
+        //    DataTable table = GetTable(query);
+        //    table.TableName = "RELATORIO";
+
+        //    return table;
+        //}
+
+        //internal DataTable GetTableTipoMateriaPrima()
+        //{
+        //    string query =
+        //        "SELECT ID,DESCRICAO " +
+        //        "  FROM TIPOMATERIAPRIMA";
+
+        //    DataTable table = GetTable(query);
+        //    table.TableName = "TIPOMATERIAPRIMA";
+
+        //    return table;
+        //}
+
+        //internal DataSet SetCrystalDataSource(string query, DataSet dataSet, string tableName)
+        //{
+        //    sqliteAdapter = new SQLiteDataAdapter(sqliteComm);
+        //    sqliteAdapter.SelectCommand = new SQLiteCommand(query, sqliteConn);
+            
+        //    sqliteAdapter.Fill(dataSet, tableName);
+
+        //    return dataSet;
+        //}
 
     }
 }
