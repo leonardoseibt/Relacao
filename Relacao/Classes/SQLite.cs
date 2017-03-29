@@ -892,7 +892,7 @@ namespace Relacao
             Produto retorno = new Produto();
             DataTable table = new DataTable();
 
-            string query = "SELECT ID,REFERENCIA,DESCRICAO FROM PRODUTO WHERE ID=" + produtoID.ToString();
+            string query = "SELECT ID,REFERENCIA,DESCRICAO,OBSERVACOES FROM PRODUTO WHERE ID=" + produtoID.ToString();
 
             if (Connect())
             {
@@ -905,6 +905,7 @@ namespace Relacao
                         retorno.ID = Convert.ToInt64(row[0]);
                         retorno.Referencia = row[1].ToString();
                         retorno.Descricao = row[2].ToString();
+                        retorno.Observacoes = row[3].ToString();
                     }
                 }
 

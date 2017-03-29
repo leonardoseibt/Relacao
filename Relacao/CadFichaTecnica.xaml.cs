@@ -65,6 +65,7 @@ namespace Relacao
 
                 txtID.Text = produto.ID.ToString();
                 txtDescricao.Text = produto.Descricao;
+                txtProdutoObs.Text = produto.Observacoes;
 
                 queryFichaTecnica =
                     "  SELECT FICHATECNICA.ID, " +
@@ -85,7 +86,8 @@ namespace Relacao
                     "         COMPONENTE.CODIGO, " +
                     "         FICHATECNICA.AGRUPAMENTO, " +
                     "         FICHATECNICA.CORCOMPRIMENTO, " +
-                    "         FICHATECNICA.CORLARGURA " +
+                    "         FICHATECNICA.CORLARGURA, " +
+                    "         PRODUTO.OBSERVACOES " +
                     "    FROM FICHATECNICA, " +
                     "         PRODUTO, " +
                     "         COMPONENTE, " +
@@ -153,6 +155,8 @@ namespace Relacao
                                 fichatecnica.CorLargura = Brushes.Orange;
                             else
                                 fichatecnica.CorLargura = Brushes.Black;
+
+                            fichatecnica.Produto.Observacoes = (string)row[19];
 
                             fichatecnicaList.Add(fichatecnica);
                         }
